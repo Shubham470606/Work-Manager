@@ -28,7 +28,18 @@ public class MainActivity extends AppCompatActivity {
                         Manifest.permission.READ_EXTERNAL_STORAGE
                 },
                 1);
+        setWorkManager();
 
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        setWorkManager();
+    }
+
+    private void setWorkManager() {
         if (checkPermissionIsEnabledForRegistraionActivity()) {
             PeriodicWorkRequest.Builder photoWorkBuilder =
                     new PeriodicWorkRequest.Builder(SchedulePullApiWorker.class, 15,
@@ -38,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
             WorkManager.getInstance().enqueue(myWork);
 
         }
-
     }
 
     public Boolean checkPermissionIsEnabledForRegistraionActivity() {
